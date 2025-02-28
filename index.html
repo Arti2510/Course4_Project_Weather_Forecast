@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="script.js" defer></script>
 </head>
-<body class="bg-center bg-cover bg-no-repeat min-h-screen w-full flex flex-col gap-1 justify-start p-2" style="background-image: url('images/clear.gif');">
+<body class="bg-center bg-cover bg-no-repeat min-h-screen w-full flex flex-col bg-black gap-1 justify-start p-2" style="background-image: url('images/clear.gif');">
     <div class="md:flex block  justify-between w-screen">
 
         <!---Day, date and time--->
@@ -27,27 +27,27 @@
    </div>
    
    <div class="min-h-screen w-full flex flex-col gap-5 justify-start p-3 items-center">
-        <div class="w-4/5 md:w-3/5 lg:w-[50%] flex justify-center items-center">
-            <span class="w-32 h-32 bg-blue-500 m-4">span1</span>
-            <span class="w-32 h-32 bg-blue-500 m-4">span2</span>
-            <span class="w-32 h-32 bg-blue-500 m-4">span3</span>
-            <span class="w-32 h-32 bg-blue-500 m-4">span4</span>
+        <div class="flex justify-center">
+            <span class="inline-block bg-transparent m-4 p-2 text-white flex border-6 border-gray-500 rounded-xl" id="spanDelhi"></span>
+            <span class="inline-block bg-transparent m-4 p-2 text-white flex border-6 border-gray-500 rounded-xl" id="spanMumbai"></span>
+            <span class="inline-block bg-transparent m-4 p-2 text-white flex border-6 border-gray-500 rounded-xl" id="spanKolkata"></span>
+            <span class="inline-block bg-transparent m-4 p-2 text-white flex border-6 border-gray-500 rounded-xl" id="spanChennai"></span>
         </div>
-        <form action="" method="get" id="form" class="flex w-4/5 md:w-3/5 lg:w-[35%] items-center justify-center gap-2">
+        <div id="div_city" class="flex w-4/5 md:w-3/5 lg:w-[35%] items-center justify-center gap-2">
             <input type ="text" name ="city" id ="town" placeholder="Enter a city..." required
-                class="py-2 px-3 w-full rounded-full bg-white text-gray-400 text-lg outline outline-2 backdrop-blur-lg ease-in-out duration-300 outline-white/70 focus:bg-white/20"
+                class="py-2 px-3 w-full rounded-full bg-white text-black text-lg outline outline-2 backdrop-blur-lg ease-in-out duration-300 outline-white/70 focus:bg-white/20"
             />
-            <button type="submit" class="text-white font-black rounded-full bg-white/50  p-3">
-                <i class="fa fa-search" style="font-size:24px"></i>
+            <button type="submit" class="text-white font-black rounded-full bg-white/25  p-3" onclick="fetchDataResponse();">
+                <i class="fa fa-search" style="font-size:20px"></i>
             </button>        
-        </form>
+        </div>
         <div class="relative flex py-5 items-center">
             <div class="flex-grow border-2 border-t border-gray-500 w-80"></div>
             <span class="flex-shrink mx-4 text-gray-600">or</span>
             <div class="flex-grow border-2 border-t border-gray-500 w-80"></div>
         </div>
         <button class="bg-blue-500 w-64">Use Current Location</button> 
-        <div>div details display</div>
+        <div id="display_city" class="bg-transparent m-4 p-2 text-white flex border-6 border-gray-500 rounded-xl"></div>
         <div>5 Day Forecast</div>
         <div class="w-4/5 md:w-3/5 lg:w-[50%] flex justify-center items-center">            
             <span class="w-32 h-32 bg-blue-500 m-4">span1</span>
