@@ -36,3 +36,17 @@ document.addEventListener('DOMContentLoaded', function() {
     setInterval(dateTime, 1000);
     dateTime();
   });
+
+function dateMonth(date_Time_Month){
+    const datemonths = [
+        'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+        'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+    ];
+
+    const days = date_Time_Month.split('-')[2]; 
+    const months = datemonths[date_Time_Month.split('-')[1]-1]; 
+
+    let string = days + " " + months;
+    return string;
+    console.log(string)
+ }
