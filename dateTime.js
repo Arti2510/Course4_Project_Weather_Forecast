@@ -48,5 +48,4 @@ function dateMonth(date_Time_Month){
 
     let string = days + " " + months;
     return string;
-    console.log(string);
  }

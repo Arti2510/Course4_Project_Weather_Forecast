@@ -31,12 +31,10 @@ async function fetchDataResponseDelhi(){
         <td style="text-align:left;">Humidity:</td>
         <td style="text-align:center; width:150px">${res.current.humidity}%</td>
         </tr>
-        </table>`;
-        console.log(res.location.name);        
+        </table>`;      
     }    
     catch(error){
         document.getElementById("spanDelhi").innerHTML += "Error :- " + error;
-        console.log(error);
     }
 }
 
@@ -66,12 +64,10 @@ async function fetchDataResponseMumbai(){
         <td style="text-align:left;">Humidity:</td>
         <td style="text-align:center; width:150px">${res.current.humidity}%</td>
         </tr>
-        </table>`;
-        console.log(res.location.name);        
+        </table>`; 
     }    
     catch(error){
         document.getElementById("spanMumbai").innerHTML += "Error :- " + error;
-        console.log(error);
     }
 }
 
@@ -101,12 +97,10 @@ async function fetchDataResponseKolkata(){
         <td style="text-align:left;">Humidity:</td>
         <td style="text-align:center; width:150px">${res.current.humidity}%</td>
         </tr>
-        </table>`;
-        console.log(res.location.name);        
+        </table>`;      
     }    
     catch(error){
         document.getElementById("spanKolkata").innerHTML += "Error :- " + error;
-        console.log(error);
     }
 }
 
@@ -136,12 +130,10 @@ async function fetchDataResponseChennai(){
         <td style="text-align:left;">Humidity:</td>
         <td style="text-align:center; width:150px">${res.current.humidity}%</td>
         </tr>
-        </table>`;
-        console.log(res.location.name);        
+        </table>`;       
     }    
     catch(error){
         document.getElementById("spanChennai").innerHTML += "Error :- " + error;
-        console.log(error);
     }
 }
 
@@ -149,7 +141,6 @@ async function fetchDataResponse(){
     document.getElementById("display_city").innerHTML = "";
     try{
         let val = document.getElementById("town").value;
-        console.log(val);
         const url = "http://api.weatherapi.com/v1/forecast.json?key=479f806fb04b468e88455648252402&q="+val+"&days=6&aqi=no&alerts=no";
         const response = await fetch(url);
         if (!response.ok) {
@@ -179,7 +170,9 @@ async function fetchDataResponse(){
         if(`${res.current.condition.text}` === "Clear" || `${res.current.condition.text}` === "Sunny"){
             document.getElementById("background").style.backgroundImage = "url('images/clear.gif')";
         }
-        if(`${res.current.condition.text}` === "Patchy rain nearby" || `${res.current.condition.text}` === "Moderate rain"){
+        if(`${res.current.condition.text}` === "Patchy rain nearby" || `${res.current.condition.text}` === "Moderate rain" || `${res.current.condition.text}` === "Light sleet showers" 
+            || `${res.current.condition.text}` === "Light rain")
+        {
             document.getElementById("background").style.backgroundImage = "url('images/rain.gif')";
         }
         document.getElementById("display_city").innerHTML += `<table>
@@ -199,8 +192,7 @@ async function fetchDataResponse(){
         <td style="text-align:left;">Humidity:</td>
         <td style="text-align:center; width:150px">${res.current.humidity}%</td>
         </tr>
-        </table>`;
-        console.log(res.location.name);    
+        </table>`;  
         if(res.forecast != null && res.forecast.forecastday != null && res.forecast.forecastday.length >0)  
             {
                 for(let i = 1; i<6; i++)
@@ -218,7 +210,6 @@ async function fetchDataResponse(){
     catch(error){
         var err = error;
         document.getElementById("display_city").innerHTML += "Error :- " + error;
-        console.log(error);
     }
     document.getElementById("town").value = "";
     if(err){
@@ -273,12 +264,10 @@ async function currentLocation() {
     navigator.geolocation.getCurrentPosition(
       async  position =>  {
             const {latitude, longitude} = position.coords;
-            console.log("latitude:", latitude);
-            console.log("longitude:",longitude);
+            
             document.getElementById("display_city").innerHTML = "";
             try{
                 let val = document.getElementById("town").value;
-                console.log(val);
                 const reverse_geocoding_url = `http://api.weatherapi.com/v1/forecast.json?key=479f806fb04b468e88455648252402&q=${latitude},${longitude}&days=6&aqi=no&alerts=no`;
                 const response = await fetch(reverse_geocoding_url);
                 if (!response.ok) {
@@ -287,6 +276,32 @@ async function currentLocation() {
                         throw new Error(`Request failed with status ${response.status}`);
                 }
                 const res = await response.json();
+                if(`${res.current.condition.text}` === "Patchy light snow"){
+            document.getElementById("background").style.backgroundImage = "url('./images/snow.gif')";
+        }
+        if(`${res.current.condition.text}` === "Partly cloudy" || `${res.current.condition.text}` === "Overcast"){
+            document.getElementById("background").style.backgroundImage = "url('images/clouds.gif')";
+        }
+        if(`${res.current.condition.text}` === "Freezing fog"){
+            document.getElementById("background").style.backgroundImage = "url('images/fog.gif')";
+        }
+        if(`${res.current.condition.text}` === "Heavy rain"){
+            document.getElementById("background").style.backgroundImage = "url('images/thunderstorm.gif')";
+        }
+        if(`${res.current.condition.text}` === "Mist"){
+            document.getElementById("background").style.backgroundImage = "url('images/mist.gif')";
+        }
+        if(`${res.current.condition.text}` === "Haze"){
+            document.getElementById("background").style.backgroundImage = "url('images/haze.gif')";
+        }
+        if(`${res.current.condition.text}` === "Clear" || `${res.current.condition.text}` === "Sunny"){
+            document.getElementById("background").style.backgroundImage = "url('images/clear.gif')";
+        }
+        if(`${res.current.condition.text}` === "Patchy rain nearby" || `${res.current.condition.text}` === "Moderate rain" || `${res.current.condition.text}` === "Light sleet showers" 
+            || `${res.current.condition.text}` === "Light rain")
+        {
+            document.getElementById("background").style.backgroundImage = "url('images/rain.gif')";
+        }
                 document.getElementById("display_city").innerHTML += `<table>
                 <tr>
                 <td style="text-align:left;">${res.current.temp_c}<sup><sup>o</sup>c</sup></td>
@@ -305,7 +320,7 @@ async function currentLocation() {
                 <td style="text-align:center; width:150px">${res.current.humidity}%</td>
                 </tr>
                 </table>`;
-                console.log(res.location.name);    
+                   
                 if(res.forecast != null && res.forecast.forecastday != null && res.forecast.forecastday.length >0)  
                 {
                     for(let i = 1; i<6; i++)
@@ -316,7 +331,7 @@ async function currentLocation() {
             }    
             catch(error){
                 document.getElementById("display_city").innerHTML += "Error :- " + error;
-                console.log(error);
+               
             }
             document.getElementById("town").value = "";
             document.getElementById("display_city").style.display = "block";
