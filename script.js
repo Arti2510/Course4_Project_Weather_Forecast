@@ -1,3 +1,5 @@
+// github link:- https://github.com/Arti2510/Course4_Project_Weather_Forecast.git
+
 const urlDelhi = "http://api.weatherapi.com/v1/current.json?key=479f806fb04b468e88455648252402&q=delhi,india&aqi=no";
 const urlMumbai = "http://api.weatherapi.com/v1/current.json?key=479f806fb04b468e88455648252402&q=mumbai,india&aqi=no";
 const urlKolkata = "http://api.weatherapi.com/v1/current.json?key=479f806fb04b468e88455648252402&q=kolkata,india&aqi=no";
