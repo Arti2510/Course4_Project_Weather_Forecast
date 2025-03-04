@@ -26,7 +26,7 @@
        </div>  
    </div>
    
-   <div class="min-h-screen w-full flex flex-col gap-5 justify-start p-3 items-center">
+   <div class="min-h-screen flex-col gap-5 justify-start p-3 items-center md:flex block w-screen">
         <div class="flex flex-wrap justify-center items-center">
             <span class="bg-transparent m-4 p-2 text-yellow-300 flex border-6 border-gray-500 rounded-xl" id="spanDelhi"></span>
             <span class="bg-transparent m-4 p-2 text-yellow-300 flex border-6 border-gray-500 rounded-xl" id="spanMumbai"></span>
@@ -34,6 +34,7 @@
             <span class="bg-transparent m-4 p-2 text-yellow-300 flex border-6 border-gray-500 rounded-xl" id="spanChennai"></span>
         </div>
         <div id="div_city" class="flex w-4/5 md:w-3/5 lg:w-[35%] items-center justify-center gap-2">
+            <select id="dropdown" class="py-2 px-3 flex rounded-full bg-white text-yellow-300 text-lg outline-2 backdrop-blur-lg ease-in-out duration-300 outline-white/70 focus:bg-white/20"" onchange="dropdownList()"></select>
             <input type ="text" name ="city" id ="town" placeholder="Enter a city..." required
                 class="py-2 px-3 w-full rounded-full bg-white text-yellow-300 text-lg outline-2 backdrop-blur-lg ease-in-out duration-300 outline-white/70 focus:bg-white/20"
             />
@@ -46,7 +47,7 @@
             <span class="flex mx-4 text-white text-lg">or</span>
             <div class="flex border-2 border-t border-white w-80"></div>
         </div>
-        <button class="bg-blue-500 p-2 border-4 border-blue-500 text-white font-serif text-lg font-semibold hover:bg-blue-200 cursor-pointer" id="current_location_btn" onclick="currentLocation();">Use Current Location</button> 
+        <button class="bg-blue-500 p-2 border-4 border-blue-500 text-white font-serif text-lg font-semibold hover:bg-blue-200 cursor-pointer rounded-full" id="current_location_btn" onclick="currentLocation();">Use Current Location</button> 
         <div id="display_city" style="display: none;" class="bg-transparent m-4 p-2 text-yellow-300 flex border-6 border-gray-500 rounded-xl"></div>
         <div style="display: none;" id="forecastText" class="font-serif text-lg font-semibold text-white">Next 4 Days Forecast</div>
         <div class="flex flex-wrap justify-center items-center">            
@@ -54,6 +55,7 @@
             <span style="display: none;" class="bg-transparent m-4 p-2 text-yellow-300 flex border-6 border-gray-500 rounded-xl" id="spanForecast2"></span>
             <span style="display: none;" class="bg-transparent m-4 p-2 text-yellow-300 flex border-6 border-gray-500 rounded-xl" id="spanForecast3"></span>
             <span style="display: none;" class="bg-transparent m-4 p-2 text-yellow-300 flex border-6 border-gray-500 rounded-xl" id="spanForecast4"></span>
+            <span style="display: none;" class="bg-transparent m-4 p-2 text-yellow-300 flex border-6 border-gray-500 rounded-xl" id="spanForecast5"></span>
        </div>
     </div>
     <script src="./dateTime.js"></script> 

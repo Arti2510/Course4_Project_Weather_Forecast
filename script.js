@@ -2,6 +2,8 @@ const urlDelhi = "http://api.weatherapi.com/v1/current.json?key=479f806fb04b468e
 const urlMumbai = "http://api.weatherapi.com/v1/current.json?key=479f806fb04b468e88455648252402&q=mumbai,india&aqi=no";
 const urlKolkata = "http://api.weatherapi.com/v1/current.json?key=479f806fb04b468e88455648252402&q=kolkata,india&aqi=no";
 const urlChennai = "http://api.weatherapi.com/v1/current.json?key=479f806fb04b468e88455648252402&q=chennai,india&aqi=no";
+let city_array = [];
+let val = document.getElementById("town").value;
 
 async function fetchDataResponseDelhi(){
     try{
@@ -144,12 +146,11 @@ async function fetchDataResponseChennai(){
 }
 
 async function fetchDataResponse(){
-    let val = document.getElementById("town").value;
     document.getElementById("display_city").innerHTML = "";
     try{
         let val = document.getElementById("town").value;
         console.log(val);
-        const url = "http://api.weatherapi.com/v1/forecast.json?key=479f806fb04b468e88455648252402&q="+val+"&days=5&aqi=no&alerts=no";
+        const url = "http://api.weatherapi.com/v1/forecast.json?key=479f806fb04b468e88455648252402&q="+val+"&days=6&aqi=no&alerts=no";
         const response = await fetch(url);
         if (!response.ok) {
             if (response.status === 404) throw new Error('404, Not found');
@@ -157,6 +158,30 @@ async function fetchDataResponse(){
             throw new Error(`Request failed with status ${response.status}`);
         }
         const res = await response.json();
+        if(`${res.current.condition.text}` === "Patchy light snow"){
+            document.getElementById("background").style.backgroundImage = "url('./images/snow.gif')";
+        }
+        if(`${res.current.condition.text}` === "Partly cloudy" || `${res.current.condition.text}` === "Overcast"){
+            document.getElementById("background").style.backgroundImage = "url('images/clouds.gif')";
+        }
+        if(`${res.current.condition.text}` === "Freezing fog"){
+            document.getElementById("background").style.backgroundImage = "url('images/fog.gif')";
+        }
+        if(`${res.current.condition.text}` === "Heavy rain"){
+            document.getElementById("background").style.backgroundImage = "url('images/thunderstorm.gif')";
+        }
+        if(`${res.current.condition.text}` === "Mist"){
+            document.getElementById("background").style.backgroundImage = "url('images/mist.gif')";
+        }
+        if(`${res.current.condition.text}` === "Haze"){
+            document.getElementById("background").style.backgroundImage = "url('images/haze.gif')";
+        }
+        if(`${res.current.condition.text}` === "Clear" || `${res.current.condition.text}` === "Sunny"){
+            document.getElementById("background").style.backgroundImage = "url('images/clear.gif')";
+        }
+        if(`${res.current.condition.text}` === "Patchy rain nearby" || `${res.current.condition.text}` === "Moderate rain"){
+            document.getElementById("background").style.backgroundImage = "url('images/rain.gif')";
+        }
         document.getElementById("display_city").innerHTML += `<table>
         <tr>
         <td style="text-align:left;">${res.current.temp_c}<sup><sup>o</sup>c</sup></td>
@@ -178,11 +203,17 @@ async function fetchDataResponse(){
         console.log(res.location.name);    
         if(res.forecast != null && res.forecast.forecastday != null && res.forecast.forecastday.length >0)  
             {
-                for(let i = 1; i<5; i++)
+                for(let i = 1; i<6; i++)
                 {
                     document.getElementById("spanForecast"+i).innerHTML = getInnerHTML(res.forecast.forecastday[i])
                 }
             }  
+        let indexToRemove = city_array.indexOf(val);
+        if(indexToRemove < 0)
+        {
+            city_array.push(val);
+            setLocalStorage();
+        }
     }    
     catch(error){
         var err = error;
@@ -197,6 +228,7 @@ async function fetchDataResponse(){
         document.getElementById("spanForecast2").style.display = "none";
         document.getElementById("spanForecast3").style.display = "none";
         document.getElementById("spanForecast4").style.display = "none";
+        document.getElementById("spanForecast5").style.display = "none";
     }
     else{
         document.getElementById("forecastText").style.display = "block";
@@ -204,9 +236,18 @@ async function fetchDataResponse(){
         document.getElementById("spanForecast2").style.display = "inline-block";
         document.getElementById("spanForecast3").style.display = "inline-block";
         document.getElementById("spanForecast4").style.display = "inline-block";
+        document.getElementById("spanForecast5").style.display = "inline-block";
     }
-    document.getElementById("display_city").style.display = "block";   
+    document.getElementById("display_city").style.display = "block";  
+    
+   
 }
+
+document.getElementById("town").addEventListener('keydown', (event) => {
+    if (event.key === 'Enter') {
+        fetchDataResponse();
+    }
+  });
 
 function getInnerHTML(forcast)
 {
@@ -238,7 +279,7 @@ async function currentLocation() {
             try{
                 let val = document.getElementById("town").value;
                 console.log(val);
-                const reverse_geocoding_url = `http://api.weatherapi.com/v1/forecast.json?key=479f806fb04b468e88455648252402&q=${latitude},${longitude}&days=5&aqi=no&alerts=no`;
+                const reverse_geocoding_url = `http://api.weatherapi.com/v1/forecast.json?key=479f806fb04b468e88455648252402&q=${latitude},${longitude}&days=6&aqi=no&alerts=no`;
                 const response = await fetch(reverse_geocoding_url);
                 if (!response.ok) {
                         if (response.status === 404) throw new Error('404, Not found');
@@ -267,7 +308,7 @@ async function currentLocation() {
                 console.log(res.location.name);    
                 if(res.forecast != null && res.forecast.forecastday != null && res.forecast.forecastday.length >0)  
                 {
-                    for(let i = 1; i<5; i++)
+                    for(let i = 1; i<6; i++)
                     {
                         document.getElementById("spanForecast"+i).innerHTML = getInnerHTML(res.forecast.forecastday[i])
                     }
@@ -284,6 +325,7 @@ async function currentLocation() {
             document.getElementById("spanForecast2").style.display = "inline-block";
             document.getElementById("spanForecast3").style.display = "inline-block";
             document.getElementById("spanForecast4").style.display = "inline-block";
+            document.getElementById("spanForecast5").style.display = "inline-block";
         },
         error => {
             if(error.code === error.PERMISSION_DENIED) {
@@ -292,15 +334,46 @@ async function currentLocation() {
         }
     );
 }
+function setLocalStorage() {   
+    localStorage.setItem("cities", city_array);
+    var selectOptions = "<option>--select city--</option>";
+            for(item of city_array)
+                {
+                    selectOptions += "<option value='"+item+"'>"+item+"</option>"           
+                }
+            document.getElementById("dropdown").innerHTML = selectOptions;
+}
+
+function dropdownList(){
+    let val = document.getElementById("dropdown").value;
+    document.getElementById("town").value="";
+    if(val != "--select city--")
+    {        
+        document.getElementById("town").value = val;
+    }
+    
+}
 
 document.addEventListener('DOMContentLoaded', function() {
+    setlocalstorageOnload();
     fetchDataResponseDelhi();
     fetchDataResponseMumbai();
     fetchDataResponseKolkata();
     fetchDataResponseChennai();
   });
+  function setlocalstorageOnload() {
+        var selectOptions = "<option>--select city--</option>";
+        if(localStorage != null && localStorage.length > 0 && localStorage.getItem("cities") != null) {
+            city_array = localStorage.getItem("cities").split(',');           
+            for(item of city_array)
+                {
+                    selectOptions+="<option value='"+item+"'>"+item+"</option>"           
+                }
+        }
+        document.getElementById("dropdown").innerHTML = selectOptions;
+}
 
-  localStorage.setItem(cityname, val);
+  
 
 
  
